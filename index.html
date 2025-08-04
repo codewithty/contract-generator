@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CodeWithTy Contract Generator | Professional Tech Contracts</title>
+    <meta
+      name="description"
+      content="Generate professional tech contracts for development, design, consulting, and custom services. Built by CodeWithTy."
+    />
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Google Fonts - Outfit -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@100;200;300;400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- External Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pizzip/3.1.4/pizzip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/docxtemplater/3.42.3/docxtemplater.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+
+    <!-- Tailwind Config -->
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              outfit: ["Outfit", "sans-serif"],
+            },
+            colors: {
+              primary: {
+                50: "#f0f9ff",
+                100: "#e0f2fe",
+                200: "#bae6fd",
+                300: "#7dd3fc",
+                400: "#38bdf8",
+                500: "#0ea5e9",
+                600: "#0284c7",
+                700: "#0369a1",
+                800: "#075985",
+                900: "#0c4a6e",
+              },
+              purple: {
+                50: "#faf5ff",
+                100: "#f3e8ff",
+                200: "#e9d5ff",
+                300: "#d8b4fe",
+                400: "#c084fc",
+                500: "#a855f7",
+                600: "#9333ea",
+                700: "#7c3aed",
+                800: "#6b21a8",
+                900: "#581c87",
+              },
+            },
+            animation: {
+              "fade-in": "fadeIn 0.5s ease-in-out",
+              "slide-up": "slideUp 0.5s ease-out",
+              "bounce-slow": "bounce 2s infinite",
+            },
+            keyframes: {
+              fadeIn: {
+                "0%": { opacity: "0", transform: "translateY(10px)" },
+                "100%": { opacity: "1", transform: "translateY(0)" },
+              },
+              slideUp: {
+                "0%": { opacity: "0", transform: "translateY(20px)" },
+                "100%": { opacity: "1", transform: "translateY(0)" },
+              },
+            },
+          },
+        },
+      };
+    </script>
+  </head>
+  <body
+    class="font-outfit bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 min-h-screen"
+  >
+    <!-- Loading Overlay -->
+    <div
+      id="loading"
+      class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 hidden items-center justify-center"
+    >
+      <div class="bg-white rounded-2xl p-8 shadow-2xl text-center">
+        <div
+          class="animate-spin rounded-full h-12 w-12 border-4 border-purple-500 border-t-transparent mx-auto mb-4"
+        ></div>
+        <p class="text-gray-700 font-medium">Generating your contract...</p>
+      </div>
+    </div>
+
+    <!-- Header -->
+    <header class="relative overflow-hidden">
+      <div
+        class="absolute inset-0 bg-gradient-to-r from-blue-600/20 to-purple-600/20"
+      ></div>
+      <div
+        class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 lg:py-16"
+      >
+        <div class="text-center animate-fade-in">
+          <div
+            class="flex flex-col sm:flex-row items-center justify-center mb-4 sm:mb-6"
+          >
+            <div
+              class="bg-gradient-to-r from-blue-500 to-purple-600 p-2 sm:p-3 rounded-2xl mb-3 sm:mb-0 sm:mr-4"
+            >
+              <svg
+                class="w-6 h-6 sm:w-8 sm:h-8 text-white"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                ></path>
+              </svg>
+            </div>
+            <h1
+              class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold bg-gradient-to-r from-white to-blue-200 bg-clip-text text-transparent"
+            >
+              Contract Generator
+            </h1>
+          </div>
+          <p
+            class="text-base sm:text-lg lg:text-xl text-blue-100 max-w-2xl mx-auto leading-relaxed px-4"
+          >
+            Create professional, legally-sound contracts for any tech service.
+            <span class="text-blue-300 font-semibold"
+              >Built for the modern tech community.</span
+            >
+          </p>
+          <div
+            class="mt-6 sm:mt-8 flex flex-col sm:flex-row items-center justify-center space-y-2 sm:space-y-0 sm:space-x-2 text-blue-200 px-4"
+          >
+            <div class="flex items-center space-x-2">
+              <svg
+                class="w-4 h-4 sm:w-5 sm:h-5"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                  clip-rule="evenodd"
+                ></path>
+              </svg>
+              <span class="text-xs sm:text-sm">PDF & DOCX Export</span>
+            </div>
+            <span class="hidden sm:inline mx-2">•</span>
+            <div class="flex items-center space-x-2">
+              <svg
+                class="w-4 h-4 sm:w-5 sm:h-5"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                  clip-rule="evenodd"
+                ></path>
+              </svg>
+              <span class="text-xs sm:text-sm">Fully Customizable</span>
+            </div>
+            <span class="hidden sm:inline mx-2">•</span>
+            <div class="flex items-center space-x-2">
+              <svg
+                class="w-4 h-4 sm:w-5 sm:h-5"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                  clip-rule="evenodd"
+                ></path>
+              </svg>
+              <span class="text-xs sm:text-sm">Real-time Preview</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <div class="grid lg:grid-cols-2 gap-8">
+        <!-- Configuration Panel -->
+        <div class="space-y-8 animate-slide-up">
+          <!-- Contract Type Selection -->
+          <div
+            class="bg-white/95 backdrop-blur-xl rounded-3xl p-8 shadow-2xl border border-white/20"
+          >
+            <div class="flex items-center mb-6">
+              <div
+                class="bg-gradient-to-r from-purple-500 to-blue-500 p-2 rounded-xl mr-3"
+              >
+                <svg
+                  class="w-6 h-6 text-white"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"
+                  ></path>
+                </svg>
+              </div>
+              <h2 class="text-2xl font-bold text-gray-800">Service Type</h2>
+            </div>
+
+            <div
+              class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2 gap-4"
+            >
+              <div
+                class="contract-type active bg-gradient-to-br from-blue-50 to-indigo-50 border-2 border-blue-200 rounded-2xl p-4 cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-lg"
+                data-type="development"
+              >
+                <div class="text-center">
+                  <div class="text-3xl mb-2">💻</div>
+                  <h3 class="font-bold text-gray-800 mb-1">Development</h3>
+                  <p class="text-sm text-gray-600">Web & Mobile</p>
+                </div>
+              </div>
+
+              <div
+                class="contract-type bg-gradient-to-br from-purple-50 to-pink-50 border-2 border-gray-200 rounded-2xl p-4 cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-lg"
+                data-type="design"
+              >
+                <div class="text-center">
+                  <div class="text-3xl mb-2">🎨</div>
+                  <h3 class="font-bold text-gray-800 mb-1">UI/UX Design</h3>
+                  <p class="text-sm text-gray-600">Design Services</p>
+                </div>
+              </div>
+
+              <div
+                class="contract-type bg-gradient-to-br from-green-50 to-emerald-50 border-2 border-gray-200 rounded-2xl p-4 cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-lg"
+                data-type="consulting"
+              >
+                <div class="text-center">
+                  <div class="text-3xl mb-2">💡</div>
+                  <h3 class="font-bold text-gray-800 mb-1">Consulting</h3>
+                  <p class="text-sm text-gray-600">Tech Advisory</p>
+                </div>
+              </div>
+
+              <div
+                class="contract-type bg-gradient-to-br from-orange-50 to-red-50 border-2 border-gray-200 rounded-2xl p-4 cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-lg"
+                data-type="product"
+              >
+                <div class="text-center">
+                  <div class="text-3xl mb-2">📱</div>
+                  <h3 class="font-bold text-gray-800 mb-1">Product Mgmt</h3>
+                  <p class="text-sm text-gray-600">Strategy & Planning</p>
+                </div>
+              </div>
+
+              <div
+                class="contract-type bg-gradient-to-br from-yellow-50 to-amber-50 border-2 border-gray-200 rounded-2xl p-4 cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-lg sm:col-span-2 lg:col-span-1 xl:col-span-2"
+                data-type="custom"
+              >
+                <div class="text-center">
+                  <div class="text-3xl mb-2">⚡</div>
+                  <h3 class="font-bold text-gray-800 mb-1">Custom Service</h3>
+                  <p class="text-sm text-gray-600">Your Unique Niche</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Custom Fields (Hidden by default) -->
+          <div
+            id="customContractFields"
+            class="bg-white/95 backdrop-blur-xl rounded-3xl p-8 shadow-2xl border border-white/20 hidden"
+          >
+            <div class="flex items-center mb-6">
+              <div
+                class="bg-gradient-to-r from-yellow-500 to-orange-500 p-2 rounded-xl mr-3"
+              >
+                <svg
+                  class="w-6 h-6 text-white"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4"
+                  ></path>
+                </svg>
+              </div>
+              <h2 class="text-2xl font-bold text-gray-800">
+                Custom Service Details
+              </h2>
+            </div>
+
+            <div class="space-y-6">
+              <div>
+                <label
+                  for="customContractTitle"
+                  class="block text-sm font-semibold text-gray-700 mb-2"
+                  >Contract Title</label
+                >
+                <input
+                  type="text"
+                  id="customContractTitle"
+                  placeholder="e.g., BLOCKCHAIN DEVELOPMENT AGREEMENT"
+                  class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-200"
+                />
+              </div>
+
+              <div>
+                <label
+                  for="customServiceType"
+                  class="block text-sm font-semibold text-gray-700 mb-2"
+                  >Service Type</label
+                >
+                <input
+                  type="text"
+                  id="customServiceType"
+                  placeholder="e.g., Blockchain Development, DevOps, Data Science"
+                  class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-200"
+                />
+              </div>
+
+              <div>
+                <label
+                  for="customScope"
+                  class="block text-sm font-semibold text-gray-700 mb-2"
+                  >Service Scope</label
+                >
+                <textarea
+                  id="customScope"
+                  rows="3"
+                  placeholder="Describe the services you'll provide in this niche..."
+                  class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-200"
+                ></textarea>
+              </div>
+
+              <div>
+                <label
+                  for="customDeliverables"
+                  class="block text-sm font-semibold text-gray-700 mb-2"
+                  >Typical Deliverables</label
+                >
+                <textarea
+                  id="customDeliverables"
+                  rows="3"
+                  placeholder="List the typical deliverables for this service..."
+                  class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-200"
+                ></textarea>
+              </div>
+            </div>
+          </div>
+
+          <!-- Contract Details Form -->
+          <div
+            class="bg-white/95 backdrop-blur-xl rounded-3xl p-8 shadow-2xl border border-white/20"
+          >
+            <div class="flex items-center mb-6">
+              <div
+                class="bg-gradient-to-r from-blue-500 to-purple-500 p-2 rounded-xl mr-3"
+              >
+                <svg
+                  class="w-6 h-6 text-white"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"
+                  ></path>
+                </svg>
+              </div>
+              <h2 class="text-2xl font-bold text-gray-800">Contract Details</h2>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <label
+                  for="freelancerName"
+                  class="block text-sm font-semibold text-gray-700 mb-2"
+                  >Your Name/Company</label
+                >
+                <input
+                  type="text"
+                  id="freelancerName"
+                  placeholder="Enter your name or company"
+                  class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-200"
+                />
+              </div>
+
+              <div>
+                <label
+                  for="clientName"
+                  class="block text-sm font-semibold text-gray-700 mb-2"
+                  >Client Name/Company</label
+                >
+                <input
+                  type="text"
+                  id="clientName"
+                  placeholder="Enter client name or company"
+                  class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-200"
+                />
+              </div>
+
+              <div class="md:col-span-2">
+                <label
+                  for="projectDescription"
+                  class="block text-sm font-semibold text-gray-700 mb-2"
+                  >Project Description</label
+                >
+                <textarea
+                  id="projectDescription"
+                  rows="3"
+                  placeholder="Brief description of the project scope and deliverables..."
+                  class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-200"
+                ></textarea>
+              </div>
+
+              <div>
+                <label
+                  for="projectValue"
+                  class="block text-sm font-semibold text-gray-700 mb-2"
+                  >Project Value ($)</label
+                >
+                <input
+                  type="number"
+                  id="projectValue"
+                  placeholder="Enter project value"
+                  class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-200"
+                />
+              </div>
+
+              <div>
+                <label
+                  for="timeline"
+                  class="block text-sm font-semibold text-gray-700 mb-2"
+                  >Timeline (weeks)</label
+                >
+                <input
+                  type="number"
+                  id="timeline"
+                  placeholder="Expected timeline"
+                  class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-200"
+                />
+              </div>
+
+              <div>
+                <label
+                  for="reviewPeriod"
+                  class="block text-sm font-semibold text-gray-700 mb-2"
+                  >Review Period</label
+                >
+                <select
+                  id="reviewPeriod"
+                  class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-200"
+                >
+                  <option value="3">3 days</option>
+                  <option value="5" selected>5 days</option>
+                  <option value="7">7 days</option>
+                  <option value="14">14 days</option>
+                </select>
+              </div>
+
+              <div>
+                <label
+                  for="paymentTerms"
+                  class="block text-sm font-semibold text-gray-700 mb-2"
+                  >Payment Terms</label
+                >
+                <select
+                  id="paymentTerms"
+                  class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-200"
+                >
+                  <option value="50-50">50% upfront, 50% on completion</option>
+                  <option value="30-70">30% upfront, 70% on completion</option>
+                  <option value="milestone">Milestone-based payments</option>
+                  <option value="net30">Net 30 days</option>
+                </select>
+              </div>
+
+              <div>
+                <label
+                  for="revisions"
+                  class="block text-sm font-semibold text-gray-700 mb-2"
+                  >Revisions Included</label
+                >
+                <select
+                  id="revisions"
+                  class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-200"
+                >
+                  <option value="2">2 revisions</option>
+                  <option value="3" selected>3 revisions</option>
+                  <option value="5">5 revisions</option>
+                  <option value="unlimited">Unlimited revisions</option>
+                </select>
+              </div>
+
+              <div>
+                <label
+                  for="governingLaw"
+                  class="block text-sm font-semibold text-gray-700 mb-2"
+                  >Governing Law</label
+                >
+                <input
+                  type="text"
+                  id="governingLaw"
+                  placeholder="e.g., California, USA"
+                  class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-200"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Preview Panel -->
+        <div class="animate-slide-up">
+          <div
+            class="bg-white/95 backdrop-blur-xl rounded-3xl shadow-2xl border border-white/20 sticky top-8"
+          >
+            <div class="p-8 border-b border-gray-200">
+              <div class="flex items-center justify-between">
+                <div class="flex items-center">
+                  <div
+                    class="bg-gradient-to-r from-green-500 to-blue-500 p-2 rounded-xl mr-3"
+                  >
+                    <svg
+                      class="w-6 h-6 text-white"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                      ></path>
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
+                      ></path>
+                    </svg>
+                  </div>
+                  <h2 class="text-2xl font-bold text-gray-800">Live Preview</h2>
+                </div>
+                <div class="flex space-x-2">
+                  <button
+                    onclick="downloadPDF()"
+                    class="bg-gradient-to-r from-red-500 to-pink-500 text-white px-4 py-2 rounded-xl font-semibold hover:shadow-lg transition-all duration-200 flex items-center space-x-2"
+                  >
+                    <svg
+                      class="w-4 h-4"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                      ></path>
+                    </svg>
+                    <span>PDF</span>
+                  </button>
+                  <button
+                    onclick="downloadDOCX()"
+                    class="bg-gradient-to-r from-blue-500 to-purple-500 text-white px-4 py-2 rounded-xl font-semibold hover:shadow-lg transition-all duration-200 flex items-center space-x-2"
+                  >
+                    <svg
+                      class="w-4 h-4"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                      ></path>
+                    </svg>
+                    <span>DOCX</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <div class="max-h-96 overflow-y-auto p-8">
+              <div id="contractPreview" class="prose prose-sm max-w-none">
+                <!-- Contract preview will be generated here -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="mt-12 sm:mt-16 lg:mt-20 border-t border-white/10">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
+        <div class="text-center">
+          <div
+            class="flex flex-col sm:flex-row items-center justify-center mb-4"
+          >
+            <svg
+              class="w-6 h-6 sm:w-8 sm:h-8 text-blue-400 mb-2 sm:mb-0 sm:mr-2"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M12.316 3.051a1 1 0 01.633 1.265l-4 12a1 1 0 11-1.898-.632l4-12a1 1 0 011.265-.633zM5.707 6.293a1 1 0 010 1.414L3.414 10l2.293 2.293a1 1 0 11-1.414 1.414l-3-3a1 1 0 010-1.414l3-3a1 1 0 011.414 0zm8.586 0a1 1 0 011.414 0l3 3a1 1 0 010 1.414l-3 3a1 1 0 11-1.414-1.414L16.586 10l-2.293-2.293a1 1 0 010-1.414z"
+                clip-rule="evenodd"
+              ></path>
+            </svg>
+            <span class="text-lg sm:text-xl font-bold text-white"
+              >CodeWithTy</span
+            >
+          </div>
+          <p class="text-blue-200 mb-4 sm:mb-6 text-sm sm:text-base px-4">
+            Empowering the tech community with professional tools and education.
+          </p>
+          <div
+            class="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-6"
+          >
+            <a
+              href="https://codewithty.dev"
+              target="_blank"
+              class="text-blue-300 hover:text-white transition-colors duration-200 flex items-center space-x-2"
+            >
+              <svg
+                class="w-4 h-4 sm:w-5 sm:h-5"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+                ></path>
+              </svg>
+              <span class="text-sm sm:text-base">Visit Website</span>
+            </a>
+            <a
+              href="https://github.com/codewithty"
+              target="_blank"
+              class="text-blue-300 hover:text-white transition-colors duration-200 flex items-center space-x-2"
+            >
+              <svg
+                class="w-4 h-4 sm:w-5 sm:h-5"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M10 0C4.477 0 0 4.484 0 10.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0110 4.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.203 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.942.359.31.678.921.678 1.856 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0020 10.017C20 4.484 15.522 0 10 0z"
+                  clip-rule="evenodd"
+                ></path>
+              </svg>
+              <span class="text-sm sm:text-base">View on GitHub</span>
+            </a>
+          </div>
+          <div class="mt-6 sm:mt-8 pt-6 sm:pt-8 border-t border-white/10">
+            <p class="text-xs sm:text-sm text-blue-300">
+              © 2025 CodeWithTy. Built with ❤️ for the tech community.
+            </p>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <script src="js/contract-generator.js"></script>
+  </body>
+</html>
