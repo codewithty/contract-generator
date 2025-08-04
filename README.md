@@ -9,8 +9,6 @@
 
 Generate professional, legally-sound contracts for any tech service in seconds. Built by [CodeWithTy](https://codewithty.dev) for developers, designers, consultants, and tech professionals worldwide.
 
-![Contract Generator Screenshot](assets/screenshot.png)
-
 ## ✨ Features
 
 ### 🎯 **Service Types**
@@ -43,7 +41,7 @@ Generate professional, legally-sound contracts for any tech service in seconds. 
 
 ### Option 1: Use Online (Recommended)
 
-Visit **[contract-generator-pro.vercel.app](https://contract-generator-pro.vercel.app)** and start generating contracts immediately.
+Visit **[contract-generator](https://codewithty.github.io/contract-generator/)** and start generating contracts immediately.
 
 ### Option 2: Local Development
 
@@ -287,10 +285,9 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 🔗 Links
 
-- 🌐 **Live Demo**: [contract-generator-pro.vercel.app](https://contract-generator-pro.vercel.app)
+- 🌐 **Live Demo**: [contract-generator](https://codewithty.github.io/contract-generator/)
 - 🏠 **CodeWithTy**: [codewithty.dev](https://codewithty.dev)
-- 📱 **Twitter**: [@codewithty](https://twitter.com/codewithty)
-- 💼 **LinkedIn**: [CodeWithTy](https://linkedin.com/company/codewithty)
+- 📱 **Twitter**: [@codewithty](https://twitter.com/codewithty_)
 
 ---
 
